@@ -21,7 +21,7 @@ class TaskController extends Controller
         $tasks=$repository->findBy([
             'owner' => $user,
         ]);
-        
+
         return $this->render('task/index.html.twig', [
             'controller_name' => 'TaskController',
             'tasks' => $tasks,
