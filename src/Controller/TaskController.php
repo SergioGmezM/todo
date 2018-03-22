@@ -32,7 +32,9 @@ class TaskController extends Controller
     */
     public function new(Request $request)
     {
+        $user = $this->getUser();
         $task = new Task();
+        $task->setOwner($user);
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
@@ -52,10 +54,12 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/task/(id)/edit", name="task_edit")
+     * @Route("/task/{id}/edit", name="task_edit")
      */
     public function edit(Request $request, Task $task)
     {
+        $this->denyAccessUnlessGranted('EDIT', $task);
+
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
